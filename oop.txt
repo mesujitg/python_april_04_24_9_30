@@ -1,7 +1,6 @@
 Class and Object
 ----------------
-
 Student
 Staff
-Course
-ClassRoom
+Course: name duration class_time module_teacher(staff) details 
+ClassRoom: room_no capacity 
