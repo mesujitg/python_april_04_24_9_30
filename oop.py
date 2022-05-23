@@ -53,6 +53,8 @@ class Student:
         pass
 '''
 
+
+# encapsulation example starts
 students = []
 
 class Student:
@@ -161,5 +163,141 @@ def use():
     use()
 
 
-use()
+# use()
+
+# encapsulation example ends
+
+'''
+class User:
+    name = ''
+    address = ''
+    email = ''
+    mobile = ''
+    username = ''
+    password = ''
+    role = ''
+
+    def login():
+        pass
+
+
+class Student(User):
+    course = ''
+
+    def add_student():
+        pass
+
+
+
+class Staff(User):
+    salary = ''
+    shift = ''
+    type = ''
+    department = ''
+
+    def add_staff():
+        pass
+
+
+
+def add(a, b):
+    return a+b
+
+
+def add(a, b, c):
+    return a+b+c
+
+'''
+
+
+
+
+# polymorphism 
+'''
+class Animal:
+    height = ''
+    breed = ''
+    color = ''
+
+    def moves(self):
+        print('It walks')
+
+    def makesound(self):
+        print('It Shouts')
+
+
+class Dog(Animal):
+
+    def makesound(self):
+        print('Dog Barks')
+
+
+class Cat(Animal):
+
+    def makesound(self):
+        print('Cat Meows')
+
+
+class Crocodile(Animal):
+
+    def makesound(self):
+        print('Crocodile Cry')
+    
+    def moves(self):
+        print('Crocodile crawls')
+
+d = Dog()
+d.moves()
+
+c = Cat()
+c.moves()
+
+cr = Crocodile()
+cr.moves()
+'''
+
+class Shape:
+    def __init__(self, name, n):
+        self.name = name
+        self.no_of_sides = n
+
+    def get_info(self):
+        print('Shape: ', self.name)
+        print('No. of Sides: ', self.no_of_sides)
+
+    def get_area(self):
+        return 0
+
+
+class Triangle(Shape):
+    def __init__(self, b, h, name, n):
+        self.base = b
+        self.height = h
+        super().__init__(name, n)
+
+    def get_area(self):
+        return 1/2 * (self.base * self.height)
+
+    def get_perimeter(self):
+        pass
+
+
+class Rectangle(Shape):
+    pass
+
+
+class Square(Shape):
+    pass
+
+
+class Circle(Shape):
+    pass
+
+
+t = Triangle(10, 5, 'Triangle', 3)
+# t.setCommonValues('Triangle', 3)
+# t.setValues(10, 5)
+t.get_info()
+print('Area of given Triangle is: ', t.get_area())
+
 
