@@ -255,18 +255,31 @@ c.moves()
 cr = Crocodile()
 cr.moves()
 '''
+from abc import ABC, abstractmethod
+from math import sqrt
 
-class Shape:
+class Shape(ABC):
     def __init__(self, name, n):
         self.name = name
         self.no_of_sides = n
+
+    # name = ''
+    # no_of_sides = 0
+
+    # def setCommonValues(self, name, n):
+    #     self.name = name
+    #     self.no_of_sides = n
 
     def get_info(self):
         print('Shape: ', self.name)
         print('No. of Sides: ', self.no_of_sides)
 
-    def get_area(self):
+    def get_volume(self):
         return 0
+
+    @abstractmethod
+    def get_area(self):
+        pass
 
 
 class Triangle(Shape):
@@ -281,23 +294,91 @@ class Triangle(Shape):
     def get_perimeter(self):
         pass
 
+    @staticmethod
+    def get_area_by_sides(a, b, c):
+        s = a+b+c
+        return sqrt(s * (s-a) * (s-b) * (s-c))
+
+    @classmethod
+    def get_triangle(cls, l, b, name, n):
+        return cls(l, b, name, n)
+
+
+t = Triangle(10, 20, 'Triangle', 3)
+print(t.get_area_by_sides(5, 10, 15))
+t1 = Triangle.get_triangle(10, 10, 'Equilateral Trianlge', 3)
+t2 = Triangle.get_triangle(10, 5, 'Right Angled Trianlge', 3)
+t3 = Triangle.get_triangle(10, 5, 'Isoceles Trianlge', 3)
+print(t1.name)
+print(t2.name)
+print(t3.name)
+
 
 class Rectangle(Shape):
-    pass
+    def __init__(self, l, b, name, n):
+        self.length = l
+        self.breadth = b
+        super().__init__(name, n)
+
+    def get_area(self):
+        return self.length * self.breadth
+
 
 
 class Square(Shape):
-    pass
+    def __init__(self, l, name, n):
+        self.length = l
+        super().__init__(name, n)
+
+    def get_area(self):
+        return self.length**2
 
 
 class Circle(Shape):
-    pass
+    def __init__(self, r, name, n):
+        self.radius = r
+        super().__init__(name, n)
+
+    def get_area(self):
+        return (3.14 * self.radius**2)
 
 
-t = Triangle(10, 5, 'Triangle', 3)
-# t.setCommonValues('Triangle', 3)
-# t.setValues(10, 5)
-t.get_info()
-print('Area of given Triangle is: ', t.get_area())
+class Cube(Shape):
+    def __init__(self, l, name, n):
+        self.length = l
+        super().__init__(name, n)
+
+    def get_area(self):
+        return 6 * self.length**2
+
+    def get_volume(self):
+        return self.length**3
+
+# t = Triangle(10, 5, 'Triangle', 3)
+# # t.setCommonValues('Triangle', 3)
+# # t.setValues(10, 5)
+# t.get_info()
+# print('Area of given Triangle is: ', t.get_area())
+
+# s = Square(10, 'Square', 4)
+# c = Circle(5, 'Circle', 0)
+# s.get_info()
+# print('Area of given Square is: ', s.get_area())
+
+# c.get_info()
+# print('Area of given Circle is: ', c.get_area())
+
+
+class Calculate:
+    @staticmethod
+    def add(a, b, c=0):
+        return a + b + c
+
+
+# c = Calculate()
+# print(c.add(10, 25))
+# print(c.add(10, 25, 35))
+
+
 
 
