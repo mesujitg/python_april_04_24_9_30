@@ -258,6 +258,7 @@ cr.moves()
 from abc import ABC, abstractmethod
 from math import sqrt
 
+
 class Shape(ABC):
     def __init__(self, name, n):
         self.name = name
