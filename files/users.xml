@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<students>
+	<student>
+		<name>ram</name>
+		<address>ktm</address>
+		<email>ram@email.com</email>
+	</student>
+	
+	<student>
+		<name>shyam</name>
+		<address>lalitpur</address>
+		<email>shyam@email.com</email>
+	</student>
+	
+	<student>
+		<name>hari</name>
+		<address>bhaktapur</address>
+		<email>hari@email.com</email>
+	</student>
+</students>
