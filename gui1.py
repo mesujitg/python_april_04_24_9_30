@@ -1,6 +1,25 @@
 from tkinter import *
 from tkinter import ttk
 
+
+# students = [
+#     {'name':'bigyan', 'address':'ktm', 'email':'bigyan@email.com', 'mobile':9841123456},
+#     {'name':'bini', 'address':'lalitpur', 'email':'bini@email.com', 'mobile':9841123456},
+#     {'name':'bhoomiksha', 'address':'baneshwor', 'email':'bhoomi@email.com', 'mobile':9841123456},
+#     {'name':'harish', 'address':'ktm', 'email':'harish@email.com', 'mobile':9841123456},
+#     ]
+
+students = [
+    ['bigyan', 'ktm', 'bigyan@email.com'],
+    ['bini', 'lalitpur', 'bini@email.com'],
+    ['bhoomiksha', 'baneshwor', 'bhoomi@email.com'],
+    ['harish', 'ktm', 'harish@email.com'],
+    ]
+
+
+
+
+
 root = Tk()
 root.title('My Window')
 root.geometry('500x500')
@@ -75,6 +94,19 @@ btn_reg.grid(row=6, column=1)
 # Label(root, text="Test").grid(row=0, column=1)
 # Label(root, text="Test").pack(side='left')
 
+tv = ttk.Treeview(root, columns=("Name", "Address", "Email"), show="headings")
+
+tv.column('Name', width=100)
+tv.column('Address', width=100)
+tv.column('Email', width=120)
+tv.heading('Name', text='Name')
+tv.heading('Address', text='Address')
+tv.heading('Email', text='Email')
+
+for s in students:
+    tv.insert("", 'end', text ="L1",  values = s)
+
+tv.grid(row=7, column=0, columnspan=2)
 
 root.mainloop()
 
