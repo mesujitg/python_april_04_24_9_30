@@ -1,6 +1,5 @@
 from tkinter import *
 
-
 users = [
     {'name':'bigyan', 'username':'bigyan', 'password':'12345', 'balance':125000},
     {'name':'bini', 'username':'bini', 'password':'11111', 'balance':75000},
@@ -8,6 +7,18 @@ users = [
     {'name':'arpana', 'username':'arpana', 'password':'22222', 'balance':90000},
     {'name':'deepak', 'username':'deepak', 'password':'deepak1', 'balance':215000},
     ]
+
+
+def withdraw():
+    amt = amount.get()
+    users[user_index]['balance'] = users[user_index]['balance'] - amt
+    print(users[user_index]['balance'])
+
+def deposite():
+    global user_index
+    amt = amount.get()
+    users[user_index]['balance'] = users[user_index]['balance'] + amt
+    print(users[user_index]['balance'])
 
 
 def login():
@@ -21,17 +32,32 @@ def login():
             # print('Welcome ', user['name'])
             # print('You balance is: ', user['balance'])
             # label_msg.config(text=f'Welcome { user["name"] }', foreground='green')
+            global user_index
+            user_index = users.index(user)
+            print('aa', user_index)
             root.destroy()
 
             root1 = Tk()
             root1.title('Dashboard')
             root1.geometry('300x300')
 
+            global amount
+            amount = IntVar()
+
             label_msg = Label(root1, text=f'Welcome { user["name"] }', font=('Arial', 18))
             label_msg.grid(row=0, column=0, padx=20)
 
             label_bal = Label(root1, text=f'You balance is: { user["balance"] }', font=('Arial', 18))
             label_bal.grid(row=1, column=0, padx=20)
+
+            entry_amt = Entry(root1, textvariable=amount)
+            entry_amt.grid(row=2, column=0, padx=20)
+
+            btn_w = Button(root1, text="Withdraw", command=withdraw)
+            btn_w.grid(row=3, column=0, padx=20, pady=10)
+
+            btn_d = Button(root1, text="Deposite", command=deposite)
+            btn_d.grid(row=4, column=0, padx=20, pady=10)
 
             root1.mainloop()
             break
