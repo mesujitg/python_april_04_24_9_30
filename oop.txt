@@ -1,6 +1,39 @@
 Class and Object
 ----------------
+
+Educational Institute
+---------------------
 Student
 Staff
 Course: name duration class_time module_teacher(staff) details 
 ClassRoom: room_no capacity 
+
+
+Hospital Mgt System
+--------------------
+Patient
+Staff
+Doctor
+Room
+Bed
+Checkup
+	doctor
+	patient
+	type
+	rate
+	date
+	time
+	symptoms
+	diagnosis
+	conclusion
+	report
+	medicine_referred
+Test
+	checkup
+	title
+	rate
+	date
+	time
+	report
+	
+	

@@ -91,17 +91,8 @@ class Calculator:
             self.display.delete(0, END)
         elif val == '=':
             self.num2 = float(self.display.get())
-            if self.op == '+':
-                result = self.num1 + self.num2
-            elif self.op == '-':
-                result = self.num1 - self.num2
-            elif self.op == '*':
-                result = self.num1 * self.num2
-            elif self.op == '/':
-                result = self.num1 / self.num2
-            
             self.display.delete(0, END)
-            self.display.insert(END, result)
+            self.display.insert(END, self.calculate())
         elif val == '+/-':
             num = self.display.get()
             if num[0] == '-':
@@ -111,5 +102,15 @@ class Calculator:
         else:
             self.display.insert(END, val)
 
+    def calculate(self):
+        if self.op == '+':
+            result = self.num1 + self.num2
+        elif self.op == '-':
+            result = self.num1 - self.num2
+        elif self.op == '*':
+            result = self.num1 * self.num2
+        elif self.op == '/':
+            result = self.num1 / self.num2
+        return result
 
 Calculator()

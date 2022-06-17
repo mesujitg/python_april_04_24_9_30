@@ -1,3 +1,4 @@
+import pwd
 from tkinter import *
 
 
@@ -9,6 +10,9 @@ root = Tk()
 root.title('My Window')
 # root.geometry('500x500')
 root.resizable(False, False)
+
+un = StringVar()
+pwd = StringVar()
 
 label = Label(root, text='Hello There', foreground='blue', background='red', 
                 font=('Arial', 20))

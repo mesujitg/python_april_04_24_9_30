@@ -1,95 +1,99 @@
 from tkinter import *
+import json
 
-users = [
-    {'name':'bigyan', 'username':'bigyan', 'password':'12345', 'balance':125000},
-    {'name':'bini', 'username':'bini', 'password':'11111', 'balance':75000},
-    {'name':'bhoomiksha', 'username':'bhoomi', 'password':'54321', 'balance':100000},
-    {'name':'arpana', 'username':'arpana', 'password':'22222', 'balance':90000},
-    {'name':'deepak', 'username':'deepak', 'password':'deepak1', 'balance':215000},
-    ]
-
-
-def withdraw():
-    amt = amount.get()
-    users[user_index]['balance'] = users[user_index]['balance'] - amt
-    print(users[user_index]['balance'])
-
-def deposite():
-    global user_index
-    amt = amount.get()
-    users[user_index]['balance'] = users[user_index]['balance'] + amt
-    print(users[user_index]['balance'])
+try:
+    file = open('users.json', 'r')
+    users = json.load(file)
+    print(users)
+except Exception as e:
+    print(e)
 
 
-def login():
-    # un = entry_un.get()
-    # pw = entry_pw.get()
-    un = username.get()
-    pw = password.get()
-    
-    for user in users:
-        if un==user['username'] and pw==user['password']:
-            # print('Welcome ', user['name'])
-            # print('You balance is: ', user['balance'])
-            # label_msg.config(text=f'Welcome { user["name"] }', foreground='green')
-            global user_index
-            user_index = users.index(user)
-            print('aa', user_index)
-            root.destroy()
+class Account:
+    def __init__(self) -> None:
+        self.root = Tk()
+        self.root.title('User Login')
+        # root.geometry('500x500')
+        self.root.resizable(False, False)
 
-            root1 = Tk()
-            root1.title('Dashboard')
-            root1.geometry('300x300')
+        self.username = StringVar()
+        self.password = StringVar()
 
-            global amount
-            amount = IntVar()
+        self.label_un = Label(self.root, text='Username', padx=20, pady=20)
+        self.label_un.grid(row=0, column=0)
 
-            label_msg = Label(root1, text=f'Welcome { user["name"] }', font=('Arial', 18))
-            label_msg.grid(row=0, column=0, padx=20)
+        self.entry_un = Entry(self.root, textvariable=self.username)
+        self.entry_un.grid(row=0, column=1, padx=20, pady=20)
 
-            label_bal = Label(root1, text=f'You balance is: { user["balance"] }', font=('Arial', 18))
-            label_bal.grid(row=1, column=0, padx=20)
+        self.label_pw = Label(self.root, text='Password')
+        self.label_pw.grid(row=1, column=0)
 
-            entry_amt = Entry(root1, textvariable=amount)
-            entry_amt.grid(row=2, column=0, padx=20)
+        self.entry_pw = Entry(self.root, show='*', textvariable=self.password)
+        self.entry_pw.grid(row=1, column=1)
 
-            btn_w = Button(root1, text="Withdraw", command=withdraw)
-            btn_w.grid(row=3, column=0, padx=20, pady=10)
+        self.btn_login = Button(self.root, text='Login', command=self.login)
+        self.btn_login.grid(row=6, column=0, columnspan=2, padx=20, pady=20)
 
-            btn_d = Button(root1, text="Deposite", command=deposite)
-            btn_d.grid(row=4, column=0, padx=20, pady=10)
+        self.label_msg = Label(self.root, text='')
+        self.label_msg.grid(row=7, column=0, columnspan=2, pady=10)
 
-            root1.mainloop()
-            break
-    else:
-        # print('Wrong credentials')
-        label_msg.config(text='Wrong credentials', foreground='red')
+        self.root.mainloop()
+
+    def login(self):
+        # un = entry_un.get()
+        # pw = entry_pw.get()
+        un = self.username.get()
+        pw = self.password.get()
+        
+        for user in users:
+            if un==user['username'] and pw==user['password']:
+                self.root.destroy()
+                user_index = users.index(user)
+                Transaction(user_index)
+                break
+        else:
+            self.label_msg.config(text='Wrong credentials', foreground='red')
 
 
-root = Tk()
-root.title('User Login')
-# root.geometry('500x500')
-root.resizable(False, False)
+class Transaction:
+    def __init__(self, u) -> None:
+        self.root1 = Tk()
+        self.root1.title('Dashboard')
+        self.root1.geometry('300x300')
 
-username = StringVar()
-password = StringVar()
+        self.user_index = u
+        self.amount = IntVar()
 
-label_un = Label(root, text='Username', padx=20, pady=20)
-label_un.grid(row=0, column=0)
+        self.label_msg = Label(self.root1, text=f'Welcome { users[self.user_index]["name"] }', font=('Arial', 18))
+        self.label_msg.grid(row=0, column=0, padx=20)
 
-entry_un = Entry(root, textvariable=username)
-entry_un.grid(row=0, column=1, padx=20, pady=20)
+        self.label_bal = Label(self.root1, text=f'You balance is: { users[self.user_index]["balance"] }', font=('Arial', 18))
+        self.label_bal.grid(row=1, column=0, padx=20)
 
-label_pw = Label(root, text='Password')
-label_pw.grid(row=1, column=0)
+        self.entry_amt = Entry(self.root1, textvariable=self.amount)
+        self.entry_amt.grid(row=2, column=0, padx=20)
 
-entry_pw = Entry(root, show='*', textvariable=password)
-entry_pw.grid(row=1, column=1)
+        self.btn_w = Button(self.root1, text="Withdraw", command=lambda: self.transaction('w'))
+        self.btn_w.grid(row=3, column=0, padx=20, pady=10)
 
-btn_login = Button(root, text='Login', command=login)
-btn_login.grid(row=6, column=0, columnspan=2, padx=20, pady=20)
+        self.btn_d = Button(self.root1, text="Deposite", command=lambda: self.transaction('d'))
+        self.btn_d.grid(row=4, column=0, padx=20, pady=10)
 
-label_msg = Label(root, text='')
-label_msg.grid(row=7, column=0, columnspan=2, pady=10)
+        self.root1.mainloop()
 
-root.mainloop()
+    def transaction(self, type):
+        amt = self.amount.get()
+        if type == 'w':
+            users[self.user_index]['balance'] = users[self.user_index]['balance'] - amt
+        elif type == 'd':    
+            users[self.user_index]['balance'] = users[self.user_index]['balance'] + amt
+        self.label_bal.config(text=f'You balance is: { users[self.user_index]["balance"] }')
+
+        try:
+            file = open('users.json', 'w')
+            json.dump(users, file)
+            print(users)
+        except Exception as e:
+            print(e)
+
+Account()
